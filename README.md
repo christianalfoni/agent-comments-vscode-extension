@@ -26,6 +26,21 @@ Press the keybinding again on a marker line to **toggle it off** (remove it).
 
 The keyword is highlighted in open editors so your pending markers are easy to spot.
 
+## Comments panel
+
+The **Agent Comments** icon in the activity bar opens a panel that lists every marker in your workspace, grouped by file. Click a comment to jump to its line. Three buttons sit in the panel header:
+
+- **Copy All** — copies the comments to the clipboard as a flat `path:line — text` list (one per block), ready to paste to your agent:
+
+  ```
+  src/foo.ts:42 — add a discount parameter and apply it here
+
+  src/checkout.ts:88 — handle the empty-cart case
+  ```
+
+- **Clear All** — removes every marker. Standalone marker lines are deleted whole; markers trailing real code are stripped, leaving the code intact.
+- **Refresh** — re-scans on demand (the panel also auto-updates as you edit, save, or add/remove files).
+
 ## Configuration
 
 | Setting | Default | Description |

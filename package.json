@@ -2,7 +2,7 @@
   "name": "agent-comments",
   "displayName": "Agent Comments",
   "description": "Insert a context-aware, single-keyword comment marker (e.g. CLAUDE:) for your coding agent to pick up.",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "publisher": "christianalfoni",
   "license": "MIT",
   "icon": "media/icon.png",
@@ -33,12 +33,73 @@
   "main": "./out/extension.js",
   "browser": "./out/web/extension.js",
   "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "agentComments",
+          "title": "Agent Comments",
+          "icon": "media/activity-icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "agentComments": [
+        {
+          "id": "agentComments.commentsView",
+          "name": "Comments",
+          "icon": "media/activity-icon.svg"
+        }
+      ]
+    },
+    "viewsWelcome": [
+      {
+        "view": "agentComments.commentsView",
+        "contents": "No agent comments found in this workspace.\nAdd one with the toggle command (cmd+shift+i / ctrl+shift+i) and it will show up here."
+      }
+    ],
     "commands": [
       {
         "command": "agentComments.toggleComment",
         "title": "Agent Comments: Toggle comment marker"
+      },
+      {
+        "command": "agentComments.copyAll",
+        "title": "Copy All Comments",
+        "category": "Agent Comments",
+        "icon": "$(copy)"
+      },
+      {
+        "command": "agentComments.clearAll",
+        "title": "Clear All Comments",
+        "category": "Agent Comments",
+        "icon": "$(clear-all)"
+      },
+      {
+        "command": "agentComments.refresh",
+        "title": "Refresh",
+        "category": "Agent Comments",
+        "icon": "$(refresh)"
       }
     ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "agentComments.copyAll",
+          "when": "view == agentComments.commentsView",
+          "group": "navigation@1"
+        },
+        {
+          "command": "agentComments.clearAll",
+          "when": "view == agentComments.commentsView",
+          "group": "navigation@2"
+        },
+        {
+          "command": "agentComments.refresh",
+          "when": "view == agentComments.commentsView",
+          "group": "navigation@3"
+        }
+      ]
+    },
     "keybindings": [
       {
         "command": "agentComments.toggleComment",
