@@ -1,0 +1,81 @@
+{
+  "name": "agent-comments",
+  "displayName": "Agent Comments",
+  "description": "Insert a context-aware, single-keyword comment marker (e.g. CLAUDE:) for your coding agent to pick up.",
+  "version": "0.1.0",
+  "publisher": "christianalfoni",
+  "license": "MIT",
+  "icon": "media/icon.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/christianalfoni/agent-comments-vscode-extension.git"
+  },
+  "bugs": {
+    "url": "https://github.com/christianalfoni/agent-comments-vscode-extension/issues"
+  },
+  "homepage": "https://github.com/christianalfoni/agent-comments-vscode-extension#readme",
+  "engines": {
+    "vscode": "^1.91.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "ai",
+    "agent",
+    "comment",
+    "intent",
+    "claude"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./out/extension.js",
+  "browser": "./out/web/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "agentComments.toggleComment",
+        "title": "Agent Comments: Toggle comment marker"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "agentComments.toggleComment",
+        "mac": "cmd+shift+i",
+        "win": "ctrl+shift+i",
+        "linux": "ctrl+shift+i",
+        "when": "editorTextFocus"
+      }
+    ],
+    "configuration": {
+      "title": "Agent Comments",
+      "properties": {
+        "agentComments.keyword": {
+          "type": "string",
+          "default": "CLAUDE",
+          "markdownDescription": "The keyword inserted as a comment marker. For example `CLAUDE` produces `// CLAUDE: ` (the comment style adapts to the language). Set it to `CODEX`, `TODO`, or anything else your agent looks for."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run build",
+    "build": "node esbuild.mjs",
+    "watch": "node esbuild.mjs --watch",
+    "compile": "tsc -p ./ --noEmit",
+    "test": "vitest run",
+    "open-in-browser": "npx @vscode/test-web --extensionDevelopmentPath=. .",
+    "package": "npx @vscode/vsce package",
+    "publish:vsce": "npx @vscode/vsce publish",
+    "publish:ovsx": "npx ovsx publish",
+    "publish": "npm run publish:vsce && npm run publish:ovsx"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@types/vscode": "^1.91.0",
+    "esbuild": "^0.28.0",
+    "typescript": "^5.3.3",
+    "vitest": "^4.1.4"
+  }
+}
