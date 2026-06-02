@@ -109,6 +109,20 @@ class CommentsProvider implements vscode.TreeDataProvider<Node> {
 }
 
 // ---------------------------------------------------------------------------
+// Helpers
+// ---------------------------------------------------------------------------
+
+// Shows a notification that closes on its own after `ms`. A plain
+// showInformationMessage lingers until dismissed; routing it through a timed
+// progress notification gives us a self-closing toast.
+function showTransientMessage(message: string, ms = 2500): void {
+  void vscode.window.withProgress(
+    { location: vscode.ProgressLocation.Notification, title: message },
+    () => new Promise<void>((resolve) => setTimeout(resolve, ms)),
+  );
+}
+
+// ---------------------------------------------------------------------------
 // Exported Functions
 // ---------------------------------------------------------------------------
 
@@ -149,7 +163,7 @@ export function registerCommentsView(
         return;
       }
       await vscode.env.clipboard.writeText(formatCommentsForClipboard(entries));
-      vscode.window.showInformationMessage(
+      showTransientMessage(
         `Copied ${entries.length} agent comment${
           entries.length === 1 ? "" : "s"
         } to the clipboard.`,
@@ -191,9 +205,7 @@ export function registerCommentsView(
       await vscode.workspace.applyEdit(edit);
       await Promise.all(docs.map((d) => d.save()));
       await refresh();
-      vscode.window.showInformationMessage(
-        `Removed ${entries.length} agent comment${plural}.`,
-      );
+      showTransientMessage(`Removed ${entries.length} agent comment${plural}.`);
     }),
     vscode.commands.registerCommand(
       "agentComments.openComment",

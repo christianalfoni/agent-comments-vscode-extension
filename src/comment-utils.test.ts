@@ -224,6 +224,22 @@ describe("getCommentStyle", () => {
     it("unknown → //", () => {
       expect(getCommentStyle("cobol", [], 0)).toEqual({ before: "// ", after: "" });
     });
+
+    it(".md file → <!-- --> even when languageId isn't markdown", () => {
+      // VS Code can report a non-markdown languageId for some .md files; the
+      // extension must still win.
+      expect(getCommentStyle("plaintext", [], 0, "/x/.claude/skills/pr/SKILL.md")).toEqual({
+        before: "<!-- ",
+        after: " -->",
+      });
+    });
+
+    it(".markdown file → <!-- -->", () => {
+      expect(getCommentStyle("plaintext", [], 0, "/x/notes.markdown")).toEqual({
+        before: "<!-- ",
+        after: " -->",
+      });
+    });
   });
 
   describe("typescriptreact picks style based on JSX context", () => {

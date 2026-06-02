@@ -2,7 +2,7 @@
   "name": "agent-comments",
   "displayName": "Agent Comments",
   "description": "Insert a context-aware, single-keyword comment marker (e.g. CLAUDE:) for your coding agent to pick up.",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "publisher": "christianalfoni",
   "license": "MIT",
   "icon": "media/icon.png",

@@ -50,7 +50,16 @@ export function getCommentStyle(
   languageId: string,
   lines: string[],
   lineIndex: number,
+  fileName = "",
 ): CommentStyle {
+  // Trust the file extension over languageId for markup files: VS Code can
+  // report a non-`markdown` languageId for some `.md` files (e.g. content-based
+  // detection on files like SKILL.md), which would wrongly fall through to `//`.
+  const ext = fileName.slice(fileName.lastIndexOf(".") + 1).toLowerCase();
+  if (ext === "md" || ext === "markdown") {
+    return { before: "<!-- ", after: " -->" };
+  }
+
   switch (languageId) {
     case "javascriptreact":
     case "typescriptreact":

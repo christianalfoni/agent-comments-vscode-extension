@@ -48,6 +48,7 @@ function toggleComment(): void {
     editor.document.languageId,
     lines,
     editor.selection.active.line,
+    editor.document.fileName,
   );
   const indent = line.text.match(/^(\s*)/)?.[1] ?? "";
   const isEmptyLine = line.text.trim() === "";
